@@ -1,0 +1,30 @@
+#include <Servo.h>
+
+#define LDR1 A0
+#define LDR2 A1
+#define SERVO_PIN 11
+
+Servo servo;
+
+void setup() {
+    servo.attach(SERVO_PIN);
+    servo.write(90);
+    delay(1000);
+}
+
+void loop() {
+    int ldr1 = analogRead(LDR1);
+    int ldr2 = analogRead(LDR2);
+    
+    int diff = abs(ldr1 - ldr2);
+    
+    if (diff > 10) {
+        if (ldr1 > ldr2) {
+            servo.write(servo.read() - 1);
+        } else {
+            servo.write(servo.read() + 1);
+        }
+    }
+    
+    delay(80);
+}
